@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -8,3 +9,6 @@ logs
 # Dependency directories
 node_modules/
 public/vendor/bower_components/
+=======
+
+>>>>>>> 0715a63c4f6790d36cf57a76618d00791cead69d
