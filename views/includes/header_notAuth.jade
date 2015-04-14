@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/vendor/bower_components/bootstrap/dist/css/bootstrap.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        div.navbar.navbar-inverse.navbar-fixed-top
+            div.container
+                div.navbar-header
+                    a.navbar-brand(href="/")= projectName
+                div#navbar.navbar-collapse.collapse
+                    form.navbar-form.navbar-right
+                        div.form-group
+                            input.form-control(type="text", placeholder="Логин")
+                        div.form-group
+                            input.form-control(type="password", placeholder="Пароль")
+                        button.btn.btn-success(type="submit", name="login") Вход
+                        button.btn(type="submit", name="auth") Регистрация
