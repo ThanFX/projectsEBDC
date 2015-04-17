@@ -22,19 +22,9 @@ var schema = new Schema({
         required: true
     },
     jira: {
-        login: {
-            type: String,
-            required: true
-        },
-        pass: {
-            type: String,
-            required: true
-        },
-        host: {
-            type: String,
-            required: true
-        },
-        required: false
+        login: String,
+        pass:  String,
+        host:  String
     },
     created: {
         type: Date,
@@ -62,11 +52,14 @@ schema.methods.checkPassword = function(password) {
 schema.statics.isUserCreated = function(login, callback) {
     this.findOne({login: login}, function(err, user){
         if(err){
-           callback(err);
+            log.err("isUserCreated, " + "login, " + err);
+            callback(err);
         }
         if(user){
+            log.info("Пользователь " + login + " существует");
             callback(null, user);
         } else {
+            log.info("Пользователя " + login + " не существует");
             callback(null, null);
         }
     });
