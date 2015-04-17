@@ -24,7 +24,7 @@ var user = new User({
     }
 });*/
 
-User.saveJIRAParams("Tester", "test", function(err, user){
+User.saveJIRAParams("Tester", "login", "pass2", "http://jira.com", function(err, user){
     if(err){
         console.log(err);
     } else {

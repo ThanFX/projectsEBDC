@@ -34,7 +34,6 @@ var schema = new Schema({
             type: String,
             required: true
         },
-        type: Schema.Types.Mixed,
         required: false
     },
     created: {
@@ -113,20 +112,25 @@ schema.statics.createUser = function(login, password, callback) {
 };
 
 schema.statics.saveJIRAParams = function(login, jiraLogin, jiraPass, jiraHost, callback){
-    var user = this.isUserCreated(login);
-    if(user){
-        user.jira.login = jiraLogin;
-        user.jira.password = jiraPass;
-        user.jira.host = jiraHost;
-        user.markModified('jira');
-        user.save(function (err) {
-            if (err) return callback(err);
-            log.info("JIRA params for user " + user.login + ' save successful');
-            callback(null, user);
-        });
-    } else {
-        callback(new AuthError("User not found"));
-    }
+    var User = this;
+    User.isUserCreated(login, function(err, user){
+        if(err){
+            callback(err);
+        }
+        if(user){
+            user.jira.login = jiraLogin;
+            user.jira.pass = jiraPass;
+            user.jira.host = jiraHost;
+            user.markModified('jira');
+            user.save(function (err) {
+                if (err) return callback(err);
+                console.log("JIRA params for user " + user.login + ' save successful');
+                callback(null, user);
+            });
+        } else {
+            callback(new AuthError("User not found"));
+        }
+    });
 };
 
 exports.User = mongoose.model('User', schema);
