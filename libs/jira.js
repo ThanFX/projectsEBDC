@@ -14,13 +14,14 @@ User.isUserCreated(login, function(err, user){
     } else if(!user.jira) {
         log.warn("У пользователя " + login + " не заданы настройки JIRA");
     } else {
-        var jira = new JiraApi('https', user.jira.host, 443, user.jira.login, user.jira.pass, '2.0.alpha1');
+        var jira = new JiraApi('https', user.jira.host, "", user.jira.login, user.jira.pass, '2');
         if(jira){
-            jira.searchJira("project='Личный кабинет компании' and issue='BIZACCOUNT-4121'", "", function(error, issue) {
+            //jira.searchJira("project='Личный кабинет компании' and issue='BIZACCOUNT-4121'", "", function(error, issue) {
+            jira.listFields(function(error, issue) {
                 if(error){
                     console.log(error);
                 } else {
-                    console.log('Status: ' + issue.fields.status.name);
+                    console.log('Status: ' + issue);
                 }
             });
         }
