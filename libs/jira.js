@@ -16,17 +16,19 @@ User.isUserCreated(login, function(err, user){
         log.warn("У пользователя " + login + " не заданы настройки JIRA");
     } else {
         var jira = new JiraApi('https', user.jira.host, "", user.jira.login, user.jira.pass, 'latest');
-        var jql = "project=BIZACCOUNT and component=Frontend";
+        var jql = "key=BIZACCOUNT-4217";
+        //jql += "?expand=changelog";
         var optional = {
             startAt: 0,
             maxResults: 3,
-            fields: ["summary", "status", "assignee", "description"]
+            expand: "changelog"
         };
+        optional.fields = ["key", "status", "summary", "description", "created"];
         jira.searchJira(jql, optional, function(error, issue) {
             if(error){
                 console.log(error);
             } else {
-                console.log(issue.issues);
+                console.log(issue);
             }
         });
     }
