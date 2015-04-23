@@ -20,15 +20,22 @@ User.isUserCreated(login, function(err, user){
         //jql += "?expand=changelog";
         var optional = {
             startAt: 0,
-            maxResults: 3,
-            expand: "changelog"
+            maxResults: 3
         };
         optional.fields = ["key", "status", "summary", "description", "created"];
         jira.searchJira(jql, optional, function(error, issue) {
             if(error){
                 console.log(error);
             } else {
-                console.log(issue);
+                console.log(issue.issues[0].id);
+                var issueQuery = issue.issues[0].id + "?expand=changelog";
+                jira.findIssue(issueQuery, function(error, issue) {
+                    if(error){
+                        console.log(error);
+                    } else {
+                        console.log(issue.changelog.histories[0]);
+                    }
+                });
             }
         });
     }
