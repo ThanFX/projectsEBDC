@@ -27,7 +27,7 @@ User.isUserCreated(login, function(err, user){
             if(error){
                 console.log(error);
             } else {
-                console.log(issue.issues[0].id);
+                console.log(issue.issues[0]);
                 var issueQuery = issue.issues[0].id + "?expand=changelog";
                 jira.findIssue(issueQuery, function(error, issue) {
                     if(error){
