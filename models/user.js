@@ -29,7 +29,11 @@ var schema = new Schema({
     created: {
         type: Date,
         default: Date.now
-    }
+    },
+    projects: [{
+        projectId: Schema.ObjectId,
+        accessType: String
+    }]
 });
 
 schema.methods.encryptPassword = function(password) {
