@@ -14,6 +14,10 @@ var schema = new Schema({
     startTaskStatus: String,
     EndTaskStatus: String,
     storyPointHour: Number,
+    update: {
+        type: String,
+        period: Number
+    },
     tasks: [{
         type: String,
         id: Schema.ObjectId,
@@ -22,7 +26,8 @@ var schema = new Schema({
         endSprint: Number,
         estimate: Number,
         name: String,
-        description: String
+        description: String,
+        isFreeze: Boolean
     }],
     created: {
         type: Date,
@@ -42,6 +47,9 @@ var schema = new Schema({
 *   Название статуса, начиная с которого задача считаеся взятой в работу в проект
 *   Название статуса, начиная с которого задача считается выполненной для проекта
 *   Количество календарных часов в одном SP
+*   Обновление данных:
+*       Тип обновления (ручное автоматическое)
+*       Период обновления (при автоматическом обновлении)
 *   Массив задач:
 *       Тип задачи (импортированная/созданная вручную)
 *       ID задачи из коллекции задач
@@ -52,5 +60,8 @@ var schema = new Schema({
 *       Первоначальная оценка длительности задачи в SP
 *       Название задачи
 *       Описание задачи
+*       Флаг разрешающий/запрещающий обновление таски в проекте
 *   Дата создания проекта
 * */
+
+exports.Project = mongoose.model('Project', schema);

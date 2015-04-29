@@ -26,6 +26,7 @@ var schema = new Schema({
         pass:  String,
         host:  String
     },
+    role: String,
     created: {
         type: Date,
         default: Date.now
