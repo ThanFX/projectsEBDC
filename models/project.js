@@ -3,10 +3,11 @@ var mongoose = require('../libs/mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    title: String,
+    name: String,
     shortName: String,
     description: String,
     startDate: Date,
+    status: String,
     sprintCount: Number,
     bufferCount: Number,
     daysInSprint: Number,
@@ -40,6 +41,7 @@ var schema = new Schema({
 *   Короткий стринговый код проекта
 *   Описание проекта
 *   Дата старта проекта
+*   Статус проекта (активен/нет)
 *   Планируемое количество спринтов в проекте
 *   Планируемое количество спринтов на буфер проекта
 *   Календарных дней в спринте
