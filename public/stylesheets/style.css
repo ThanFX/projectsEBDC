@@ -1,11 +1,7 @@
 body {
-    padding: 50px;
+    padding-top: 70px;
 }
 
-.navbar-form.navbar-right>div {
-    margin-right: 5px;
-}
-
-.navbar-form.navbar-right>button {
-    margin-right: 5px;
+a:link {
+    text-decoration: none;
 }

@@ -3,29 +3,39 @@
 <head>
     <meta charset="utf-8">
     <title>Bootstrap, from Twitter</title>
-    <link href="c:/dropbox/nodeJS/projectsEBDC/public/vendor/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="c:/dropbox/nodeJS/projectsEBDC/public/stylesheets/style.css" rel="stylesheet">
+    <link href="public/vendor/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="public/stylesheets/style.css" rel="stylesheet">
     <style></style>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Project name</a>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" placeholder="Логин" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Пароль" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success" name="login">Вход</button>
+                    <button type="submit" class="btn" name="auth">Регистрация</button>
+                </form>
+            </div>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Логин" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Пароль" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success" name="login">Вход</button>
-                <button type="submit" class="btn" name="auth">Регистрация</button>
-            </form>
+    </nav>
+
+    <div class="article container">
+        <div class="row">
+            <div class="col-xs-12 h5 well text-primary">
+                <a href="#">
+                    <span class="glyphicon glyphicon-plus"></span> Добавить новый проект
+                </a>
+            </div>
         </div>
     </div>
-</nav>
 </body>
 </html>
