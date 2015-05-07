@@ -1,2 +1,54 @@
 include includes/header_auth
-span Добавление нового проекта!
+div.container
+    fieldset.add-new-project
+        legend Добавление нового проекта
+        form
+            div.col-lg-4
+                div.form-group
+                    label.control-label(for="projectName") Название проекта:
+                    input#projectName.form-control(type="text" required)
+                div.form-group
+                    label.control-label(for="projectShortName") Короткий код проекта:
+                    input#projectShortName.form-control(type="text" required)
+                div.form-group
+                    label.control-label(for="projectDescription") Описание проекта:
+                    textarea#projectDescription.form-control(rows="2" required)
+                div.form-group
+                    div.row
+                        label.col-xs-12.control-label(for="startDate") Дата начала проекта:
+                    div.row
+                        div.col-xs-8
+                            input#startDate.form-control(type="date" required)
+            div.col-lg-4
+                div.form-group
+                    div.row
+                        label.col-xs-12.control-label(for="daysInSprint") Длительность спринта:
+                    div.row
+                        div.col-xs-8
+                            select#daysInSprint.form-control
+                                option(value="week") Неделя
+                                option(value="2weeks") 2 недели
+                                option(value="month") Месяц
+                div.form-group
+                    div.row
+                        label.col-xs-12.control-label(for="sprintCount") Длительность проекта:
+                    div.row
+                        div.col-xs-8
+                            div.input-group
+                                input#sprintCount.form-control(type="number" required)
+                                span.input-group-addon  спринтов
+
+                div.form-group
+                    div.row
+                        label.col-xs-12.control-label(for="bufferCount") Длительность буфера проекта:
+                    div.row
+                        div.col-xs-8
+                            div.input-group
+                                input#bufferCount.form-control(type="number" required)
+                                span.input-group-addon  спринтов
+                div.form-group
+                    div.row
+                        label.col-xs-12.control-label(for="endDate") Планируемая дата завершения:
+                    div.row
+                        div.col-xs-8
+                            input#endDate.form-control(type="date" disabled)

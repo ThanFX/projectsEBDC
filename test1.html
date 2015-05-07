@@ -27,15 +27,37 @@
             </div>
         </div>
     </nav>
-
-    <div class="article container">
-        <div class="row">
-            <div class="col-xs-12 h5 well text-primary">
-                <a href="#">
-                    <span class="glyphicon glyphicon-plus"></span> Добавить новый проект
-                </a>
+    <div class="container">
+        <form>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="projectName" class="control-label">Название проекта:</label>
+                    <input type="text" class="form-control" id="projectName">
+                </div>
+                <div class="form-group">
+                    <label for="projectShortName">Код проекта:</label>
+                    <input type="text" class="form-control" id="projectShortName">
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">Описание проекта:</label>
+                    <textarea class="form-control" id="projectDescription" rows="3"></textarea>
+                </div>
             </div>
-        </div>
+
+
+                <div class="col-lg-4 form-horizontal">
+                    <div class="form-group">
+                        <label for="startDate" class="col-sm-6 control-label">Дата начала проекта:</label>
+                        <div class=" col-sm-6">
+                            <input type="date" class="form-control" id="startDate">
+                        </div>
+                    </div>
+                </div>
+
+            <div class="col-lg-4">
+
+            </div>
+        </form>
     </div>
 </body>
 </html>

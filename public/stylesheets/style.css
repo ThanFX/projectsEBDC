@@ -5,3 +5,11 @@ body {
 a:link {
     text-decoration: none;
 }
+
+legend {
+    font-size: medium;
+}
+
+.col-lg-4:nth-child(2) .form-group:nth-last-child(1) {
+    margin-top: 35px;
+}
