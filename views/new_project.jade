@@ -2,53 +2,97 @@ include includes/header_auth
 div.container
     fieldset.add-new-project
         legend Добавление нового проекта
-        form
-            div.col-lg-4
-                div.form-group
-                    label.control-label(for="projectName") Название проекта:
-                    input#projectName.form-control(type="text" required)
-                div.form-group
-                    label.control-label(for="projectShortName") Короткий код проекта:
-                    input#projectShortName.form-control(type="text" required)
-                div.form-group
-                    label.control-label(for="projectDescription") Описание проекта:
-                    textarea#projectDescription.form-control(rows="2" required)
-                div.form-group
+        form(method="post" action="/project/new")
+            div.rov
+                //include includes/save_project_error
+            div.row
+                div.col-lg-4
+                    div.form-group
+                        label.control-label(for="projectName") Название проекта:
+                        input#projectName.form-control(type="text", name="projectName")
+                    div.form-group
+                        label.control-label(for="projectShortName") Короткий код проекта:
+                        input#projectShortName.form-control(type="text", name="projectShortName")
+                    div.form-group
+                        label.control-label(for="projectDescription") Описание проекта:
+                        textarea#projectDescription.form-control(rows="5", name="projectDescription")
+                    div.form-group
+                        div.row
+                            label.col-xs-12.control-label(for="startDate") Дата начала проекта:
+                        div.row
+                            div.col-xs-12
+                                input#startDate.form-control(type="date", name="startDate")
+                div.col-lg-8
                     div.row
-                        label.col-xs-12.control-label(for="startDate") Дата начала проекта:
-                    div.row
-                        div.col-xs-8
-                            input#startDate.form-control(type="date" required)
-            div.col-lg-4
-                div.form-group
-                    div.row
-                        label.col-xs-12.control-label(for="daysInSprint") Длительность спринта:
-                    div.row
-                        div.col-xs-8
-                            select#daysInSprint.form-control
-                                option(value="week") Неделя
-                                option(value="2weeks") 2 недели
-                                option(value="month") Месяц
-                div.form-group
-                    div.row
-                        label.col-xs-12.control-label(for="sprintCount") Длительность проекта:
-                    div.row
-                        div.col-xs-8
-                            div.input-group
-                                input#sprintCount.form-control(type="number" required)
-                                span.input-group-addon  спринтов
-
-                div.form-group
-                    div.row
-                        label.col-xs-12.control-label(for="bufferCount") Длительность буфера проекта:
-                    div.row
-                        div.col-xs-8
-                            div.input-group
-                                input#bufferCount.form-control(type="number" required)
-                                span.input-group-addon  спринтов
-                div.form-group
-                    div.row
-                        label.col-xs-12.control-label(for="endDate") Планируемая дата завершения:
-                    div.row
-                        div.col-xs-8
-                            input#endDate.form-control(type="date" disabled)
+                        div.col-lg-6
+                            div.form-group
+                                div.row
+                                    label.col-xs-12.control-label(for="daysInSprint") Длительность спринта:
+                                div.row
+                                    div.col-xs-12
+                                        select#daysInSprint.form-control(name="daysInSprint")
+                                            option(value="week") Неделя
+                                            option(value="2weeks") 2 недели
+                                            option(value="month") Месяц
+                            div.form-group
+                                div.row
+                                    label.col-xs-12.control-label(for="sprintCount") Длительность проекта:
+                                div.row
+                                    div.col-xs-12
+                                        div.input-group
+                                            input#sprintCount.form-control(type="number", name="sprintCount")
+                                            span.input-group-addon  спринтов
+                            div.form-group
+                                div.row
+                                    label.col-xs-12.control-label(for="bufferCount") Длительность буфера проекта:
+                                div.row
+                                    div.col-xs-12
+                                        div.input-group
+                                            input#bufferCount.form-control(type="number", name="bufferCount")
+                                            span.input-group-addon  спринтов
+                            div.form-group
+                                div.row
+                                    label.col-xs-12.control-label(for="endDate") Планируемая дата завершения:
+                                div.row
+                                    div.col-xs-12
+                                        input#endDate.form-control(type="date" disabled)
+                        div.col-lg-6
+                            div.form-group
+                                div.row
+                                    label.col-xs-12.control-label(for="startTaskStatus") Стартовый статус тикета:
+                                div.row
+                                    div.col-xs-12
+                                        input#startTaskStatus.form-control(type="text", name="startTaskStatus")
+                            div.form-group
+                                div.row
+                                    label.col-xs-12.control-label(for="EndTaskStatus") Финишный статус тикета:
+                                div.row
+                                    div.col-xs-12
+                                        input#EndTaskStatus.form-control(type="text", name="EndTaskStatus")
+                            div.form-group
+                                div.row
+                                    label.col-xs-12.control-label(for="storyPointHour") Длительность 1 SP:
+                                div.row
+                                    div.col-xs-12
+                                        div.input-group
+                                            input#storyPointHour.form-control(type="number", name="storyPointHour")
+                                            span.input-group-addon часов
+                            div.form-group
+                                div.row
+                                    label.col-xs-12.control-label(for="updatePeriod") Обновлять раз в:
+                                div.row
+                                    div.col-xs-12
+                                        select#updatePeriod.form-control(name="updatePeriod")
+                                            option(value="0") Не обновлять
+                                            option(value="5") 5 минут
+                                            option(value="15") 15 минут
+                                            option(value="60") 1 час
+                                            option(value="1440") Раз в сутки
+                        div.col-lg-12
+                            div.form-group
+                                label.control-label(for="jql") Запрос в JIRA:
+                                textarea#jql.form-control(rows="2", name="jql")
+            div.rov
+                div.col-lg-3.col-lg-offset-5
+                    button.btn.btn-success(type="submit") Создать
+                    a.btn.btn-default(role="button" href="/") Отмена

@@ -10,6 +10,10 @@ legend {
     font-size: medium;
 }
 
-.col-lg-4:nth-child(2) .form-group:nth-last-child(1) {
-    margin-top: 35px;
+.col-lg-4:nth-child(1) .form-group:nth-last-child(1) {
+    margin-top: 30px;
+}
+
+button {
+    margin-right: 20px;
 }
