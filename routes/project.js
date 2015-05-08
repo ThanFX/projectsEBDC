@@ -9,4 +9,9 @@ router.get('/new', function(req, res) {
     res.render('new_project', { title: 'Проекты', projectName: 'EBDC for projects' });
 });
 
+router.post('/new', function(req, res) {
+    console.log(req.body);
+    res.redirect('/');
+});
+
 module.exports = router;
