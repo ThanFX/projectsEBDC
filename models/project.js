@@ -10,7 +10,7 @@ var schema = new Schema({
     status: String,
     sprintCount: Number,
     bufferCount: Number,
-    daysInSprint: Number,
+    daysInSprint: String,
     jqlFilter: String,
     startTaskStatus: String,
     EndTaskStatus: String,
@@ -32,6 +32,52 @@ var schema = new Schema({
         default: Date.now
     }
 });
+
+schema.statics.isProjectCreated = function(key, callback){
+    this.findOne({shortName: key}, function(err, project){
+        if(err){
+            log.err(isProjectCreated + " " + key + ": " + err);
+            callback(err);
+        }
+        if(project){
+            callback(null, project);
+        } else {
+            log.info("Проекта " + key + " не существует");
+            callback(null, null);
+        }
+    });
+};
+
+schema.statics.createOrUpdateProject = function(project, callback){
+    var Project = this;
+    Project.isProjectCreated(project.shortName, function(err, findingProject){
+        if(err){
+            callback(err);
+        }
+        if(findingProject) {
+            for(var key in project) {
+                if (!project.hasOwnProperty(key)) continue;
+                findingProject[key] = project[key];
+            }
+            findingProject.save(function(err){
+                if(err){
+                    return callback(err);
+                }
+                log.info("Проект " + project.shortName + " обновлен");
+                callback(null, findingProject);
+            });
+        } else {
+            var newProject = new Project(project);
+            newProject.save(function(err){
+                if(err){
+                    return callback(err);
+                }
+                log.info("Проект " + project.shortName + " создан");
+                callback(null, newProject);
+            });
+        }
+    });
+};
 
 /* Описание полей схемы
 *   Название проекта

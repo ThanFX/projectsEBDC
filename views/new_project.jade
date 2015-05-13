@@ -8,14 +8,14 @@ div.container
             div.row
                 div.col-lg-4
                     div.form-group
-                        label.control-label(for="projectName") Название проекта:
-                        input#projectName.form-control(type="text", name="projectName")
+                        label.control-label(for="name") Название проекта:
+                        input#name.form-control(type="text", name="name")
                     div.form-group
-                        label.control-label(for="projectShortName") Короткий код проекта:
-                        input#projectShortName.form-control(type="text", name="projectShortName")
+                        label.control-label(for="shortName") Короткий код проекта:
+                        input#shortName.form-control(type="text", name="shortName")
                     div.form-group
-                        label.control-label(for="projectDescription") Описание проекта:
-                        textarea#projectDescription.form-control(rows="5", name="projectDescription")
+                        label.control-label(for="description") Описание проекта:
+                        textarea#description.form-control(rows="5", name="description")
                     div.form-group
                         div.row
                             label.col-xs-12.control-label(for="startDate") Дата начала проекта:
@@ -90,8 +90,8 @@ div.container
                                             option(value="1440") Раз в сутки
                         div.col-lg-12
                             div.form-group
-                                label.control-label(for="jql") Запрос в JIRA:
-                                textarea#jql.form-control(rows="2", name="jql")
+                                label.control-label(for="jqlFilter") Запрос в JIRA:
+                                textarea#jqlFilter.form-control(rows="2", name="jqlFilter")
             div.rov
                 div.col-lg-3.col-lg-offset-5
                     button.btn.btn-success(type="submit") Создать

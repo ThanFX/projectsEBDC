@@ -57,7 +57,7 @@ schema.methods.checkPassword = function(password) {
 schema.statics.isUserCreated = function(login, callback) {
     this.findOne({login: login}, function(err, user){
         if(err){
-            log.err("isUserCreated, " + "login, " + err);
+            log.err("isUserCreated, " + " " + login + ": " + err);
             callback(err);
         }
         if(user){
