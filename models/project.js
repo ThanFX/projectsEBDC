@@ -48,6 +48,10 @@ schema.statics.isProjectCreated = function(key, callback){
     });
 };
 
+schema.statics.findProjectsByUser = function(user, callback){
+
+};
+
 schema.statics.createOrUpdateProject = function(project, callback){
     var Project = this;
     Project.isProjectCreated(project.shortName, function(err, findingProject){

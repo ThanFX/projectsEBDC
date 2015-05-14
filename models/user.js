@@ -131,6 +131,34 @@ schema.statics.saveJIRAParams = function(login, jiraLogin, jiraPass, jiraHost, c
     });
 };
 
+schema.statics.saveProject = function(login, project, callback){
+    var User = this;
+    User.isUserCreated(login, function(err, user){
+        if(err){
+            callback(err);
+        }
+        if(user){
+            var elem = -1;
+            for(var i = 0; i < user.projects.length; i++){
+                if(user.projects[i].projectId === project.projectId){
+                    user.projects[i].accessType = project.accessType;
+                    elem = i;
+                    break;
+                }
+            }
+            if(elem == -1){
+                user.projects.push(project);
+            }
+            user.markModified('projects');
+            user.save(function (err) {
+                if (err) return callback(err);
+                console.log("Projects for user " + user.login + ' save successful');
+                callback(null, user);
+            });
+        }
+    });
+};
+
 exports.User = mongoose.model('User', schema);
 
 function AuthError(message) {
