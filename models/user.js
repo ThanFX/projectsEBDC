@@ -140,7 +140,8 @@ schema.statics.saveProject = function(login, project, callback){
         if(user){
             var elem = -1;
             for(var i = 0; i < user.projects.length; i++){
-                if(user.projects[i].projectId === project.projectId){
+                if(user.projects[i].projectId.equals(project.projectId)){
+                    console.log("Равны");
                     user.projects[i].accessType = project.accessType;
                     elem = i;
                     break;

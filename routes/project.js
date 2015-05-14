@@ -6,7 +6,7 @@ var User = require("../models/user").User;
 
 
 var userName = "Than";
-
+//project = "Личный кабинет компании" and component = Frontend and createdDate > startOfMonth()
 
 router.get('/', function(req, res) {
 
@@ -18,13 +18,11 @@ router.get('/new', function(req, res) {
 });
 
 router.post('/new', function(req, res, next) {
-    console.log(req.body);
     Project.createOrUpdateProject(req.body, function(err, project){
         if(err){
             log.error(err);
             return next(err);
         }
-        log.info("Успешно!");
         var userProject = {
             projectId: project._id,
             accessType: "owner"
