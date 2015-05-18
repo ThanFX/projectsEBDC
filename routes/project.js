@@ -8,9 +8,29 @@ var User = require("../models/user").User;
 var userName = "Than";
 //project = "Личный кабинет компании" and component = Frontend and createdDate > startOfMonth()
 
-router.get('/', function(req, res) {
+router.get('/', function(req, res, next) {
+    User.isUserCreated(userName, function(err, user){
+        if(err){
+            log.error(err);
+            return next(err);
+        }
+        if(user) {
+            Project.getProjectsShortInfo(user.projects, function (err, projects) {
+                if(err){
+                    log.error(err);
+                    return next(err);
+                }
+                res.render('projects', {
+                    title: 'Проекты',
+                    projectName: 'EBDC for projects',
+                    projectsInfo: projects
+                });
+            });
+        } else {
+            res.status(401).send("Пользователь " + userName + " не найден!");
+        }
 
-    res.render('projects', { title: 'Проекты', projectName: 'EBDC for projects' });
+    });
 });
 
 router.get('/new', function(req, res) {
@@ -24,7 +44,7 @@ router.post('/new', function(req, res, next) {
             return next(err);
         }
         var userProject = {
-            projectId: project._id,
+            projectName: project.shortName,
             accessType: "owner"
         };
         User.saveProject(userName, userProject, function(err, user){

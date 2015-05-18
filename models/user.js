@@ -32,7 +32,7 @@ var schema = new Schema({
         default: Date.now
     },
     projects: [{
-        projectId: Schema.ObjectId,
+        projectName: String,
         accessType: String
     }]
 });
@@ -140,8 +140,7 @@ schema.statics.saveProject = function(login, project, callback){
         if(user){
             var elem = -1;
             for(var i = 0; i < user.projects.length; i++){
-                if(user.projects[i].projectId.equals(project.projectId)){
-                    console.log("Равны");
+                if(user.projects[i].projectName == project.projectName){
                     user.projects[i].accessType = project.accessType;
                     elem = i;
                     break;

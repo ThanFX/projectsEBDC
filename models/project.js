@@ -1,5 +1,6 @@
 var log = require('../libs/log')(module);
 var mongoose = require('../libs/mongoose');
+var async = require('async');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
@@ -48,8 +49,34 @@ schema.statics.isProjectCreated = function(key, callback){
     });
 };
 
-schema.statics.findProjectsByUser = function(user, callback){
+schema.statics.getShortInfo = function(project, callback){
+    var Project = this;
+    Project.isProjectCreated(project.projectName, function(err, project){
+        if(err) {
+            callback(err);
+        }
+        if(project){
+            var info = {
+                name: project.name,
+                shortName: project.shortName,
+                startDate: project.startDate,
+                status: project.status
+            };
+            callback(null, info);
+        } else {
+            callback(null, null);
+        }
+    });
+};
 
+schema.statics.getProjectsShortInfo = function(projects, callback){
+    var Project = this;
+    async.map(projects, Project.getShortInfo.bind(Project), function(err, shortInfo){
+        if(err) {
+            callback(err);
+        }
+        callback(null, shortInfo);
+    });
 };
 
 schema.statics.createOrUpdateProject = function(project, callback){
@@ -71,6 +98,7 @@ schema.statics.createOrUpdateProject = function(project, callback){
                 callback(null, findingProject);
             });
         } else {
+            project.status = 'new';
             var newProject = new Project(project);
             newProject.save(function(err){
                 if(err){
