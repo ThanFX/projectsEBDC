@@ -1,2 +1,5 @@
 include includes/header_auth
 div.container
+    include includes/add_new_project
+    - each project in projectsInfo
+      include includes/projectShortInfo

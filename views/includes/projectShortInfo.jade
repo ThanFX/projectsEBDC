@@ -1,0 +1,16 @@
+div.row
+    div.col-lg-12.h5.well.text-primary.projectsList(id= project.shortName)
+        div.row
+            div.col-lg-3.projectShortInfo
+                span= project.shortName
+            div.col-lg-6.projectName
+                span= project.name
+            div.col-lg-2.startDate
+                span= project.startDate
+            div.col-lg-1.settings
+                div.navbar-left.edit
+                    a(href='projects/edit/' + project.shortName)
+                        span.glyphicon.glyphicon-edit
+                div.navbar-right.tickets
+                    a(href='projects/tickets/' + project.shortName)
+                        span.glyphicon.glyphicon-tasks
