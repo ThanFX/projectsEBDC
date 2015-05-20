@@ -9,8 +9,8 @@ div.row
                 span= project.startDate
             div.col-lg-1.settings
                 div.navbar-left.edit
-                    a(href='projects/edit/' + project.shortName)
+                    a(href='projects/' + project.shortName + '/edit/')
                         span.glyphicon.glyphicon-edit
                 div.navbar-right.tickets
-                    a(href='projects/tickets/' + project.shortName)
+                    a(href='projects/' + project.shortName + '/tickets/')
                         span.glyphicon.glyphicon-tasks

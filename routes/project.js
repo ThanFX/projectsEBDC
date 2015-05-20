@@ -27,10 +27,28 @@ router.get('/', function(req, res, next) {
                 });
             });
         } else {
+            log.warn("Error 401: Пользователь " + userName + " не найден");
             res.status(401).send("Пользователь " + userName + " не найден!");
         }
 
     });
+});
+
+router.get('/:shortName/edit', function(req, res, next) {
+    var shortName = req.params.shortName;
+    Project.isProjectCreated(shortName, function(err, project){
+        if(err){
+            log.error(err);
+            return next(err);
+        }
+        if(project){
+            res.render('edit_project', {project: project});
+        } else {
+            log.warn("Error 404: Проект " + shortName + " не найден");
+            res.status(404).send("Проект " + shortName + " не найден");
+        }
+    });
+
 });
 
 router.get('/new', function(req, res) {
