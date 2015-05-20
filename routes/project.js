@@ -8,6 +8,10 @@ var User = require("../models/user").User;
 var userName = "Than";
 //project = "Личный кабинет компании" and component = Frontend and createdDate > startOfMonth()
 
+var projectPage = function(req, res, next) {
+
+}
+
 router.get('/', function(req, res, next) {
     User.isUserCreated(userName, function(err, user){
         if(err){
@@ -30,7 +34,6 @@ router.get('/', function(req, res, next) {
             log.warn("Error 401: Пользователь " + userName + " не найден");
             res.status(401).send("Пользователь " + userName + " не найден!");
         }
-
     });
 });
 
@@ -48,7 +51,6 @@ router.get('/:shortName/edit', function(req, res, next) {
             res.status(404).send("Проект " + shortName + " не найден");
         }
     });
-
 });
 
 router.get('/new', function(req, res) {
@@ -73,7 +75,7 @@ router.post('/new', function(req, res, next) {
             log.info("Проект упешно записали в юзера: " + user);
         });
     });
-    res.redirect('/');
+    res.redirect('/project');
 });
 
 module.exports = router;
