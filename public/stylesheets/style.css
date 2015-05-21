@@ -18,3 +18,12 @@ button {
     margin-bottom: 5px;
     margin-top: 5px;
 }
+
+.projectsList .settings>div{
+    display: inline-block;
+}
+
+.projectsList .settings .edit,
+.projectsList .settings .tickets {
+    margin-right: 10px;
+}

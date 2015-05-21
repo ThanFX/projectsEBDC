@@ -8,10 +8,6 @@ var User = require("../models/user").User;
 var userName = "Than";
 //project = "Личный кабинет компании" and component = Frontend and createdDate > startOfMonth()
 
-var projectPage = function(req, res, next) {
-
-}
-
 router.get('/', function(req, res, next) {
     User.isUserCreated(userName, function(err, user){
         if(err){
@@ -73,9 +69,9 @@ router.post('/new', function(req, res, next) {
                 return next(err);
             }
             log.info("Проект упешно записали в юзера: " + user);
+            res.redirect('/project');
         });
     });
-    res.redirect('/project');
 });
 
 module.exports = router;
