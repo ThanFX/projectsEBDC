@@ -22,7 +22,6 @@ router.get('/', function(req, res, next) {
                 }
                 res.render('projects', {
                     title: 'Проекты',
-                    projectName: 'EBDC for projects',
                     projectsInfo: projects
                 });
             });
@@ -33,6 +32,10 @@ router.get('/', function(req, res, next) {
     });
 });
 
+
+//ToDo!!! Во вьюхе переписать выбор сохраненного значения в селектах - сейчас там адовый костылище!
+//ToDo!!! Во вьюхе переписать преобразование даты для предустановки сохраненного значения - сейчас там адовый костылище!
+
 router.get('/:shortName/edit', function(req, res, next) {
     var shortName = req.params.shortName;
     Project.isProjectCreated(shortName, function(err, project){
@@ -41,7 +44,7 @@ router.get('/:shortName/edit', function(req, res, next) {
             return next(err);
         }
         if(project){
-            res.render('edit_project', {project: project});
+            res.render('project_edit', {project: project});
         } else {
             log.warn("Error 404: Проект " + shortName + " не найден");
             res.status(404).send("Проект " + shortName + " не найден");
@@ -49,8 +52,28 @@ router.get('/:shortName/edit', function(req, res, next) {
     });
 });
 
+router.post('/:shortName/edit', function(req, res, next){
+    Project.createOrUpdateProject(req.body, function(err, project){
+        if(err){
+            log.error(err);
+            return next(err);
+        }
+        var userProject = {
+            projectName: project.shortName
+        };
+        User.saveProject(userName, userProject, function(err, user){
+            if(err){
+                log.error(err);
+                return next(err);
+            }
+            log.info("Проект " + project.shortName + " упешно обновили у юзера: " + user);
+            res.redirect('/project');
+        });
+    });
+});
+
 router.get('/new', function(req, res) {
-    res.render('new_project', { title: 'Проекты', projectName: 'EBDC for projects' });
+    res.render('new_project', { title: 'Проекты' });
 });
 
 router.post('/new', function(req, res, next) {

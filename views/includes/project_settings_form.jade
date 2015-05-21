@@ -1,20 +1,27 @@
+-if (!project) project=""
 div.row
     div.col-lg-4
         div.form-group
             label.control-label(for="name") Название проекта:
-            input#name.form-control(type="text", name="name")
+            input#name.form-control(type="text", name="name" value=project.name)
         div.form-group
             label.control-label(for="shortName") Короткий код проекта:
-            input#shortName.form-control(type="text", name="shortName")
+            input#shortName.form-control(type="text", name="shortName" value=project.shortName)
         div.form-group
             label.control-label(for="description") Описание проекта:
-            textarea#description.form-control(rows="5", name="description")
+            textarea#description.form-control(rows="5", name="description")= project.description
         div.form-group
             div.row
                 label.col-xs-12.control-label(for="startDate") Дата начала проекта:
             div.row
                 div.col-xs-12
-                    input#startDate.form-control(type="date", name="startDate")
+                    -var date = new Date(project.startDate);
+                    -var m = date.getMonth();
+                    -if (++m < 10) m = "0" + m;
+                    -var d = date.getDate();
+                    -if (d < 10) d = "0" + d;
+                    -var formattedDate = date.getFullYear() + '-' + m + '-' + d;
+                    input#startDate.form-control(type="date", name="startDate", value=formattedDate)
     div.col-lg-8
         div.row
             div.col-lg-6
@@ -24,16 +31,20 @@ div.row
                     div.row
                         div.col-xs-12
                             select#daysInSprint.form-control(name="daysInSprint")
-                                option(value="week") Неделя
-                                option(value="2weeks") 2 недели
-                                option(value="month") Месяц
+                                -var sel1, sel2, sel3 = false
+                                -if(project.daysInSprint == 'week') sel1 = true
+                                option(value="week", selected=sel1) Неделя
+                                -if(project.daysInSprint == '2weeks') sel2 = true
+                                option(value="2weeks", selected=sel2) 2 недели
+                                -if(project.daysInSprint == 'month') sel3 = true
+                                option(value="month", selected=sel3) Месяц
                 div.form-group
                     div.row
                         label.col-xs-12.control-label(for="sprintCount") Длительность проекта:
                     div.row
                         div.col-xs-12
                             div.input-group
-                                input#sprintCount.form-control(type="number", name="sprintCount")
+                                input#sprintCount.form-control(type="number", name="sprintCount" value=project.sprintCount)
                                 span.input-group-addon  спринтов
                 div.form-group
                     div.row
@@ -41,7 +52,7 @@ div.row
                     div.row
                         div.col-xs-12
                             div.input-group
-                                input#bufferCount.form-control(type="number", name="bufferCount")
+                                input#bufferCount.form-control(type="number", name="bufferCount" value=project.bufferCount)
                                 span.input-group-addon  спринтов
                 div.form-group
                     div.row
@@ -55,33 +66,39 @@ div.row
                         label.col-xs-12.control-label(for="startTaskStatus") Стартовый статус тикета:
                     div.row
                         div.col-xs-12
-                            input#startTaskStatus.form-control(type="text", name="startTaskStatus")
+                            input#startTaskStatus.form-control(type="text", name="startTaskStatus" value=project.startTaskStatus)
                 div.form-group
                     div.row
                         label.col-xs-12.control-label(for="EndTaskStatus") Финишный статус тикета:
                     div.row
                         div.col-xs-12
-                            input#EndTaskStatus.form-control(type="text", name="EndTaskStatus")
+                            input#EndTaskStatus.form-control(type="text", name="EndTaskStatus" value=project.EndTaskStatus)
                 div.form-group
                     div.row
                         label.col-xs-12.control-label(for="storyPointHour") Длительность 1 SP:
                     div.row
                         div.col-xs-12
                             div.input-group
-                                input#storyPointHour.form-control(type="number", name="storyPointHour")
+                                input#storyPointHour.form-control(type="number", name="storyPointHour" value=project.storyPointHour)
                                 span.input-group-addon часов
                 div.form-group
                     div.row
                         label.col-xs-12.control-label(for="updatePeriod") Обновлять раз в:
                     div.row
                         div.col-xs-12
-                            select#updatePeriod.form-control(name="updatePeriod")
-                                option(value="0") Не обновлять
-                                option(value="5") 5 минут
-                                option(value="15") 15 минут
-                                option(value="60") 1 час
-                                option(value="1440") Раз в сутки
+                            select#updatePeriod.form-control(name="updatePeriod" value=project.updatePeriod)
+                                -var sel4, sel5, sel6, sel7, sel8 = false
+                                -if(project.updatePeriod == 0) sel4 = true
+                                option(value="0", selected=sel4) Не обновлять
+                                -if(project.updatePeriod == 5) sel5 = true
+                                option(value="5", selected=sel5) 5 минут
+                                -if(project.updatePeriod == 15) sel6 = true
+                                option(value="15", selected=sel6) 15 минут
+                                -if(project.updatePeriod == 60) sel7 = true
+                                option(value="60", selected=sel7) 1 час
+                                -if(project.updatePeriod == 1440) sel8 = true
+                                option(value="1440", selected=sel8) Раз в сутки
             div.col-lg-12
                 div.form-group
                     label.control-label(for="jqlFilter") Запрос в JIRA:
-                    textarea#jqlFilter.form-control(rows="2", name="jqlFilter")
+                    textarea#jqlFilter.form-control(rows="2", name="jqlFilter")= project.jqlFilter
