@@ -3,7 +3,7 @@ var router = express.Router();
 var log = require("../libs/log")(module);
 var Project = require("../models/project").Project;
 var User = require("../models/user").User;
-
+var Task = require("../models/task").Task;
 
 var userName = "Than";
 //project = "Личный кабинет компании" and component = Frontend and createdDate > startOfMonth()
@@ -70,6 +70,28 @@ router.post('/:shortName/edit', function(req, res, next){
             res.redirect('/project');
         });
     });
+});
+
+router.get('/:shortName/tasks', function(req, res, next){
+    var shortName = req.params.shortName;
+    Project.isProjectCreated(shortName, function(err, project){
+        if(err){
+            log.error(err);
+            next(err);
+        }
+        if(project){
+            Task.getAllTasks(userName, project.jqlFilter, function(err, tasks){
+                if(err){
+                    log.error(err);
+                }
+                res.json(tasks);
+                //res.render('project_tasks', {project: project, tasks: tasks});
+            });
+        } else {
+            log.warn("Error 404: Проект " + shortName + " не найден");
+            res.status(404).send("Проект " + shortName + " не найден");
+        }
+    })
 });
 
 router.get('/new', function(req, res) {

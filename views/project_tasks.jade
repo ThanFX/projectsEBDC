@@ -1,0 +1,16 @@
+include includes/header_auth
+div.container
+    fieldset.edit-project
+        legend Список задач проекта #{project.shortName}
+        form(method="post" action="/project/" + project.shortName + "/tasks")
+            div.rov
+                //include includes/save_project_error
+            div.rov
+                div.col-lg-12
+                    div.form-group
+                        label.control-label(for="jqlFilter") Запрос в JIRA:
+                        textarea#jqlFilter.form-control(rows="2", name="jqlFilter")= project.jqlFilter
+            div.rov
+                div.col-lg-3.col-lg-offset-5
+                    button.btn.btn-success(type="submit") Обновить
+                    a.btn.btn-default(role="button" href="/project") Отмена
