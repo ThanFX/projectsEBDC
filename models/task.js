@@ -3,6 +3,7 @@ var JiraApi = require('jira').JiraApi;
 var log = require('../libs/log')(module);
 var mongoose = require('../libs/mongoose');
 var Schema = mongoose.Schema;
+var async = require('async');
 
 var schema = new Schema({
     taskId: Number,
@@ -13,7 +14,8 @@ var schema = new Schema({
     status: String,
     estimate: Number,
     changelog: [{
-        status: String,
+        statusFrom: String,
+        statusTo: String,
         date: Date
     }],
     created: {
@@ -44,27 +46,49 @@ schema.statics.getAllTasks = function(userName, jqlFilter, callback){
             var jira = new JiraApi('https', jiraSettings.host, "", jiraSettings.login, jiraSettings.pass, 'latest');
             var optional = {
                 startAt: 0,
-                maxResults: 1000
+                expand: "changelog",
+                maxResults: 1
             };
             optional.fields = ["key", "status", "summary", "description", "created", "timeoriginalestimate"];
+            optional.changelog = ["histories"];
             jira.searchJira(jqlFilter, optional, function(err, tickets) {
                 if(err){
                     callback(err);
                 }
-                var tasks = [];
-                for(var i = 0; i < tickets.issues.length; i++){
-                    var task = {
-                        id:             tickets.issues[i].id,
-                        key:            tickets.issues[i].key,
-                        status:         tickets.issues[i].fields.status.name,
-                        name:           tickets.issues[i].fields.summary,
-                        description:    tickets.issues[i].fields.description,
-                        created:        tickets.issues[i].fields.created,
-                        estimate:       tickets.issues[i].fields.timeoriginalestimate
-                    };
-                    tasks.push(task);
-                }
-                callback(null, tasks);
+                async.map(tickets.issues,
+                    function(issue, issueCallback){
+                        var statusHistory = [];
+                        console.log(issue);
+/*                        for (var i = 0; i < issue.changelog.histories.length; i++){
+                            if(issue.changelog.histories[i].items[0].field != "status"){
+                                continue;
+                            }
+                            var changeSatus = {
+                                created: new Date(issue.changelog.histories[i].created),
+                                statusFrom: issue.fields.histories[i].items[0].fromString,
+                                statusTo: issue.fields.histories[i].items[0].toString
+                            };
+                            statusHistory.push(changeSatus);
+                        }*/
+                        var task = {
+                            id:             issue.id,
+                            key:            issue.key,
+                            status:         issue.fields.status.name,
+                            name:           issue.fields.summary,
+                            description:    issue.fields.description,
+                            created:        issue.fields.created,
+                            estimate:       issue.fields.timeoriginalestimate,
+                            changelog:      statusHistory
+                        };
+                        issueCallback(null, task);
+                    },
+                    function(err, tasks){
+                        if(err){
+                            callback(err, null);
+                        }
+                        callback(null, tasks);
+                    }
+                );
             });
         } else {
             callback(null, null);
